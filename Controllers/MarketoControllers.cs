@@ -16,7 +16,7 @@ namespace Marketo.Controllers
         public async Task<ActionResult<ResponseOfIdentity>>  PostIdentity(IdentityQuery identityQuery)
         {
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage IdentityResponse = await httpClient.GetAsync(identityQuery.api.url + identityQuery.api.rout + "?client_id=" + identityQuery.identity.client_id + "&client_secret=" + identityQuery.identity.client_secret + "&grant_type=" + identityQuery.identity.grant_type );
+            HttpResponseMessage IdentityResponse = await httpClient.GetAsync(String.Format(identityQuery.api.baseurl + identityQuery.api.path + "?client_id={0}&client_secret={1}&client_secret=&grant_type={2}", identityQuery.identity.client_id, identityQuery.identity.client_secret, identityQuery.identity.grant_type ));
             var IdentityBody = await IdentityResponse.Content.ReadAsStringAsync();
             ResponseOfIdentity responseOfIdentity = JsonConvert.DeserializeObject<ResponseOfIdentity>(IdentityBody);
             return responseOfIdentity;

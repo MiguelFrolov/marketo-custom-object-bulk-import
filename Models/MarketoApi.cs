@@ -2,8 +2,8 @@ namespace Marketo.Models
 {
     public class Api
     {
-        public string? url { get; set; }
-        public string? rout  { get; set; }
+        public string? baseurl { get; set; }
+        public string? path  { get; set; }
     }
     public class Identity
     {
