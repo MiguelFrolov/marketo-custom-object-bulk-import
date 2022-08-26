@@ -56,4 +56,22 @@ namespace Marketo.Controllers
             return responseOfLead;
         } 
     }
+    [Route("api/[controller]")]
+    [ApiController]
+    public class customobjectController : ControllerBase
+    {
+        [HttpPost]
+        public async Task<ActionResult<ResponseOfCustomobject>>  PostCustomobject(CustomobjectQuery customobjectQuery)
+        {
+            identityController identityController = new identityController();
+            Task<ActionResult<ResponseOfIdentity>> responseOfIdentity = identityController.PostIdentity(customobjectQuery.identityQuery);
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",  responseOfIdentity.Result.Value.access_token );
+            StringContent customObjectContent = new StringContent(JsonConvert.SerializeObject(customobjectQuery.customeObjectRequest.customeObjectBody), Encoding.UTF8, "application/json");
+            HttpResponseMessage customObjectResponse = await httpClient.PostAsync(String.Format(customobjectQuery.api.baseurl + customobjectQuery.api.path, customobjectQuery.customeObjectRequest.customeObjectName) ,customObjectContent);
+            var customObjectBody = await customObjectResponse.Content.ReadAsStringAsync();
+            ResponseOfCustomobject responseOfCustomobject = JsonConvert.DeserializeObject<ResponseOfCustomobject>(customObjectBody);
+            return responseOfCustomobject;
+        }
+    }
 }

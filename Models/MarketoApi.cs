@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+
 namespace Marketo.Models
 {
     public class Api
@@ -104,6 +106,42 @@ namespace Marketo.Models
         public Api api { get; set; }
         public IdentityQuery identityQuery { get; set; }
         public string filterType { get; set; }
-        public string[] filterValues { get; set; }
+        public JArray filterValues { get; set; }
     }
+    public class CustomobjectQuery
+    {
+        public Api api { get; set; }
+        public SyncCustomeObjectRequest customeObjectRequest { get; set; }
+        public IdentityQuery identityQuery { get; set; }
+    }
+    public class SyncCustomeObjectRequest
+    {
+        public string customeObjectName { get; set; }
+        public CustomeObjectBody customeObjectBody { get; set; }
+
+    }
+    public class CustomeObjectBody
+    {
+        public string action { get; set; }
+        public string dedupeBy { get; set; }
+        public CustomeObjectFileds[] input { get; set; }
+      
+    }
+    public class ResponseOfCustomobject
+    {
+        public Error[] errors { get; set; }
+        public bool? moreResult { get; set; }
+        public string? nextPageToken { get; set; }
+        public string requestId { get; set; }
+        public CustomObject[] result { get; set; }
+        public bool? success { get; set; }
+        public Warning[] warnings { get; set; }
+    }
+
+    public class CustomObject {
+        public string marketoGUID  { get; set; }
+        public Reason[] reasons { get; set; }
+        public int seq  { get; set; }
+}
+
 }
