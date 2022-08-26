@@ -39,4 +39,21 @@ namespace Marketo.Controllers
             return responseOfLead;
         }
     }
+    [Route("api/[controller]")]
+    [ApiController]
+    public class leadIdsController : ControllerBase
+    {
+        [HttpPost]
+        public async Task<ActionResult<ResponseOfLead>>  PostLead(LeadIdsQuery leadIdsQuery)
+        {
+            identityController identityController = new identityController();
+            Task<ActionResult<ResponseOfIdentity>> responseOfIdentity = identityController.PostIdentity(leadIdsQuery.identityQuery);
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",  responseOfIdentity.Result.Value.access_token );
+            HttpResponseMessage leadIdsResponse = await httpClient.GetAsync(String.Format(leadIdsQuery.api.baseurl + leadIdsQuery.api.path , leadIdsQuery.filterType,  string.Join(",",leadIdsQuery.filterValues ) ));
+            var leadIdsBody = await leadIdsResponse.Content.ReadAsStringAsync();
+            ResponseOfLead responseOfLead = JsonConvert.DeserializeObject<ResponseOfLead>(leadIdsBody);
+            return responseOfLead;
+        } 
+    }
 }

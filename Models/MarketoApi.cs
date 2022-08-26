@@ -59,7 +59,7 @@ namespace Marketo.Models
         public string? token_type { get; set; }
     }
     public class ResponseOfLead {
-        public Array[] errors { get; set; }
+        public Error[] errors { get; set; }
         public bool? moreResult { get; set; }
         public string? nextPageToken { get; set; }
         public string requestId { get; set; }
@@ -76,6 +76,11 @@ namespace Marketo.Models
         public ProgramMembership? membership  { get; set; }
         public Reason? reason { get; set; }
         public string? status { get; set; }
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+        public string? email { get; set; }
+        public string? updatedAt { get; set; }
+         public string? createdAt { get; set; }
         }
     public class Warning {
         public int code { get; set; }
@@ -93,5 +98,12 @@ namespace Marketo.Models
     public class Reason {
         public string code { get; set; }
         public string message { get; set; }
+    }
+    public class LeadIdsQuery 
+    {
+        public Api api { get; set; }
+        public IdentityQuery identityQuery { get; set; }
+        public string filterType { get; set; }
+        public string[] filterValues { get; set; }
     }
 }
