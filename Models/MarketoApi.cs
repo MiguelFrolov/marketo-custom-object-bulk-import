@@ -1,5 +1,3 @@
-using Newtonsoft.Json.Linq;
-
 namespace Marketo.Models
 {
     public class Api
@@ -106,7 +104,7 @@ namespace Marketo.Models
         public Api api { get; set; }
         public IdentityQuery identityQuery { get; set; }
         public string filterType { get; set; }
-        public JArray filterValues { get; set; }
+        public string[] filterValues { get; set; }
     }
     public class CustomobjectQuery
     {
@@ -124,7 +122,7 @@ namespace Marketo.Models
     {
         public string action { get; set; }
         public string dedupeBy { get; set; }
-        public CustomeObjectFileds[] input { get; set; }
+        public Dictionary<string, string>[] input { get; set; }
       
     }
     public class ResponseOfCustomobject

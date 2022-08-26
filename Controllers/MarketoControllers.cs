@@ -68,6 +68,7 @@ namespace Marketo.Controllers
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",  responseOfIdentity.Result.Value.access_token );
             StringContent customObjectContent = new StringContent(JsonConvert.SerializeObject(customobjectQuery.customeObjectRequest.customeObjectBody), Encoding.UTF8, "application/json");
+            Console.WriteLine(JsonConvert.SerializeObject(customobjectQuery.customeObjectRequest.customeObjectBody).ToString());
             HttpResponseMessage customObjectResponse = await httpClient.PostAsync(String.Format(customobjectQuery.api.baseurl + customobjectQuery.api.path, customobjectQuery.customeObjectRequest.customeObjectName) ,customObjectContent);
             var customObjectBody = await customObjectResponse.Content.ReadAsStringAsync();
             ResponseOfCustomobject responseOfCustomobject = JsonConvert.DeserializeObject<ResponseOfCustomobject>(customObjectBody);
