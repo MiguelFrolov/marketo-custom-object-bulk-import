@@ -1,4 +1,6 @@
 # Marketo custom object bulk import
+## Framework 
+net6.0
 ## Restore packages
 ```
 dotnet restore
@@ -6,4 +8,89 @@ dotnet restore
 ## Run app
 ```
 dotnet run
+```
+###1. GEt token
+```{
+    "api":{
+	"baseurl": "***", 
+    "path": "/identity/oauth/token" 
+    }, 
+	"identity": { 
+        "client_id": "***", 
+        "client_secret": "***", 
+        "grant_type": "client_credentials" 
+        } 
+}
+```
+###2. Send leads
+```
+{
+  "api": {
+    "baseurl": "***",
+    "path": "/rest/v1/leads.json"
+  },
+  "syncLeadRequest": {
+    "action": "createOrUpdate",
+    "lookupField": "email",
+    "input": [
+      {
+        "firstName": "***",
+        "lastName": "***",
+        "email": "***"
+      }
+    ]
+  },
+  "identityQuery": {
+    "api":{
+	"baseurl": "***", "path": "/identity/oauth/token" 
+    }, 
+	"identity": { "client_id": "***", "client_secret": "***", "grant_type": "***" } 
+  }
+}
+```
+###3. Get leads id by email
+```
+{
+  "api": {
+    "baseurl": "***",
+    "path": "/rest/v1/leads.json?filterType={0}&filterValues={1}"
+  },
+  "filterType": "email",
+  "filterValues": ["email_1","email_2","email_n"],
+  "identityQuery": {
+    "api":{
+	"baseurl": "***", "path": "/identity/oauth/token" 
+    }, 
+	"identity": { "client_id": "***", "client_secret": "***", "grant_type": "***" } 
+  }
+}
+```
+###4. Send the data of the custom object
+```
+{
+  "api": {
+    "baseurl": "***",
+    "path": "/rest/v1/customobjects/{0}.json"
+  },
+  "customeObjectRequest":{
+	"customeObjectName": "***",
+	"customeObjectBody": {
+		"action":"createOrUpdate",
+		"dedupeBy":"dedupeFields",
+		"input": [{
+			"person_id": "***",
+			"field_1": "***",
+			"field_2": "***",
+			"field_n": "***"
+		}
+        ]
+	}
+  },
+  "identityQuery": {
+    "api":{
+	"baseurl": "***", "path": "/identity/oauth/token" 
+    }, 
+	"identity": { "client_id": "***", "client_secret": "***", "grant_type": "client_credentials" } 
+  }
+}
 ```

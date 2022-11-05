@@ -5,16 +5,10 @@ namespace Marketo.Models
         public string? baseurl { get; set; }
         public string? path  { get; set; }
     }
-    public class Identity
-    {
-        public string? client_id  { get; set; }
-        public string? client_secret { get; set; }
-        public string? grant_type { get; set; }
-    }
     public class IdentityQuery
     {
         public Api api { get; set; }
-        public Identity identity { get; set; }
+        public IdentityRequest identity { get; set; }
     }
     public class SyncLeadRequest 
     {
@@ -50,6 +44,12 @@ namespace Marketo.Models
         public Api api { get; set; }
         public SyncLeadRequest syncLeadRequest { get; set; }
         public IdentityQuery identityQuery { get; set; }
+    }
+    public class IdentityRequest
+    {
+        public string? client_id  { get; set; }
+        public string? client_secret { get; set; }
+        public string? grant_type { get; set; }
     }
     public class ResponseOfIdentity 
     {
